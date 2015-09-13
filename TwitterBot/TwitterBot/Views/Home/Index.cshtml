@@ -1,0 +1,104 @@
+﻿@model dynamic
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#603cba">
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="stylesheet" href="../../reset.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="../../layout.css" type="text/css" media="screen">
+
+        <title>Lent Bot</title>
+    </head>
+    <body>
+        <div id="banner">
+			<div id="banner-content">
+				<img id="twitteravatar"/>
+			</div>
+		</div>
+		<div id="about">
+			<div id="about-content">
+			    <p>Hello!  I'm LentBot, an automated Twitter Bot that reminds you when Lent is coming.  I'll tweet on New Year's Day, a month before, a week before, on Shrove Tuesday and then all through Lent!</p>
+
+			    <p>Follow me on <a href="https://twitter.com/LentReminder/">Twitter</a></p>
+                
+			    <p>I'm made up of a web-app that checks dates from Google Calendar, tweeting if its a date of interest, and a worker/scheduled task to wake me up daily, both are hosted by <a href="https://appharbor.com/">AppHarbor</a></p>
+
+			    <p>The complete source for the Lent Bot Twitter Bot is available from <a href="https://github.com/pmccolgan/Twitter-Bot">here</a> and the source for my scheduled job is <a href="https://github.com/pmccolgan/Twitter-Bot-Ping">here</a></p>
+			</div>
+		</div>
+		<div id="app">
+		    <div id="app-content">
+		        <p>Today's date is:  @ViewBag.Now</p>
+                
+		        @if ((@ViewBag.NextAshWednesday != null) &&
+		             (@ViewBag.NextEaster != null))
+		        {
+		            <p>The date of Ash Wednesday for next or current Lent is: @ViewBag.NextAshWednesday and the date of Easter is: @ViewBag.NextEaster (so the length of Lent is: @ViewBag.LentLength days)</p>
+		        }
+
+		        @if (!string.IsNullOrEmpty(@ViewBag.WaitMessage))
+		        {
+		            <p>@ViewBag.WaitMessage</p>
+		        }
+
+		        @if (!string.IsNullOrEmpty(@ViewBag.TweetMessage))
+		        {
+		            <p>The message to tweet today is: '@ViewBag.TweetMessage'</p>
+		        }
+		        else
+		        {
+		            <p>There isn't anything to tweet today!</p>
+		        }
+            
+		        @if ((@ViewBag.HasTweeted != null) &&
+		             (@ViewBag.HasTweeted) &&
+		             (@ViewBag.AlreadyTweetedTime != null))
+		        {
+		            <p>Have already tweeted today? @ViewBag.HasTweeted at @ViewBag.AlreadyTweetedTime</p>
+		        }
+            
+		        @if ((@ViewBag.TweetSuccessful != null) &&
+		             (@ViewBag.TweetSuccessful))
+		        {
+		            <p>Was the tweet sent successfully? @ViewBag.TweetSuccessful</p>
+		        }
+		    </div>
+		</div>  
+		@if (!string.IsNullOrEmpty(@ViewBag.Error))
+		{
+		<div id="error">
+			<div id="error-content">
+		        <p>@ViewBag.Error</p>
+			</div>
+		</div>
+		}
+        <div id="footer">
+			<div id="footer-content">
+			    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/LentReminder" data-widget-id="556607887905398784">Tweets by LentReminder</a>
+                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+            </div>
+		</div>
+    </body>
+</html>

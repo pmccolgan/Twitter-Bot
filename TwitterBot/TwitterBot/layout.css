@@ -1,0 +1,80 @@
+﻿@viewport {
+  width: device-width;
+  zoom: 1;
+}
+
+body {
+  font: 600 14px/24px "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Sans-Serif;
+  background-color: #00FF00; 
+}
+
+div#banner {
+  width: 100%; 
+  margin-top: 20px;
+}
+div#banner-content { 
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 10px; 
+  vertical-align: middle;
+  align-content: center;
+}
+img#twitteravatar { 
+    display:block;
+    margin:auto;
+    content: url('/twitter-egg_profile250.png');
+    width: 100px;
+    height: 100px;
+}
+
+div#about { 
+  width: 100%; 
+  margin-top: 20px;
+}
+div#about-content { 
+  background-color: #00FFFF; 
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 10px; 
+}
+
+div#app { 
+  width: 100%; 
+  margin-top: 20px;
+}
+div#app-content { 
+  background-color: #FFFF00;
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 10px; 
+}
+
+div#error { 
+  background-color: #FF0000; 
+  width: 100%; 
+  margin-top: 20px;
+}
+div#error-content { 
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 10px; 
+  border: 1px solid #000;
+}
+
+div#footer { 
+  width: 100%; 
+  margin-top: 20px;
+}
+div#footer-content { 
+  width: 80%; 
+  margin: 0 auto; 
+  padding: 10px;
+}
+
+@media all and (min-width: 420px) {
+    img#twitteravatar {
+        content: url('/twitter-egg_profile.png');
+        width: 250px;
+        height: 250px;
+    }
+}
