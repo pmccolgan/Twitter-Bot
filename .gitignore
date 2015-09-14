@@ -48,7 +48,6 @@ TwitterBot/TwitterBot/bin/
 TwitterBot/TwitterBot/obj/
 TwitterBot/TwitterBot/packages/
 packages/
-TwitterBot/TwitterBot/Web.config
 TwitterBot/TwitterBot/Backupapp.config
 TwitterBot/TwitterBot/Web.config
 *.p12
