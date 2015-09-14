@@ -19,12 +19,16 @@ div#banner-content {
   vertical-align: middle;
   align-content: center;
 }
-img#twitteravatar { 
+
+div#twitteravatar { 
     display:block;
     margin:auto;
-    content: url('/twitter-egg_profile250.png');
     width: 100px;
     height: 100px;
+    background-image: url("/twitter-egg_profile250.png");
+    background-repeat: no-repeat;
+    background-size:contain; 
+    background-position:center;
 }
 
 div#about { 
@@ -72,9 +76,9 @@ div#footer-content {
 }
 
 @media all and (min-width: 420px) {
-    img#twitteravatar {
-        content: url('/twitter-egg_profile.png');
+    div#twitteravatar {
         width: 250px;
         height: 250px;
+        background-image: url("/twitter-egg_profile.png");
     }
 }
