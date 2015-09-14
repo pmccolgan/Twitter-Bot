@@ -2,30 +2,33 @@
 
 Very simple ASP.Net MVC 4 application (one controller, one action, one view) that can post to twitter.
 
-Specifically it looks up google calendar's public christian holiday calendar, gets all events from the start of the current year for the next two years and uses the values for Ash Wednesday and Easter Sunday to determine when Lent starts or if in Lent when it will end.
+Specifically when run the application looks up google calendar's public christian holiday calendar, gets all events from the start of the current year for the next two years and uses the values for Ash Wednesday and Easter Sunday to determine when Lent starts or if in Lent when it will end.  Then it decides based on this whether or not it should tweet about it.  To ensure the app is run daily a separate application runs on a background worker, the source for this application is available at [Twitter Bot Ping] (https://github.com/pmccolgan/Twitter-Bot-Ping).  Any errors and it should email a report out.
 
-Initially inspired by this:
-http://www.billthelizard.com/2013/12/creating-twitter-bot-on-google-app.html
+Initially inspired by this post: http://www.billthelizard.com/2013/12/creating-twitter-bot-on-google-app.html
 
-Used this to generate the basic ASP.Net MVC 4 application:
-http://mvc4beginner.com/Tutorial/MVC-Hello-World-Barebone.html
+Used this to generate the basic ASP.Net MVC 4 application: http://mvc4beginner.com/Tutorial/MVC-Hello-World-Barebone.html
 
-Get Google Calendar packages:
-https://www.nuget.org/packages/Google.Apis.Calendar.v3/
+[Google Calendar API] (https://github.com/pmccolgan/Google-Calendar-API-v3-Simple-Console-Demo) and [Twitter API] (https://github.com/pmccolgan/Twitter-API-Simple-Console-Demo) based on previous work.
 
-Newtownsoft version issues:
-http://stackoverflow.com/questions/6176841/could-not-load-file-or-assembly-newtonsoft-json-version-3-5-0-0/24206229#24206229
+Ended up not using the [GMail API] (https://github.com/pmccolgan/Gmail-API-Simple-Console-Demo) as [you can't access it with a service account] (http://stackoverflow.com/questions/26517737/trying-using-oauth2-causes-a-not-authorized-client-or-scope-error/26548375#26548375), just used the Mailgun add-on which was very straight-forward.
 
-Google Calendar with service account issues:
-http://stackoverflow.com/questions/26517737/trying-using-oauth2-causes-a-not-authorized-client-or-scope-error/26548375#26548375
+Google, Twitter and mail all need configured in the Web.config.
 
-Get GMail packages:
-https://www.nuget.org/packages/Google.Apis.Gmail.v1/
-
-Warning
-1>  Consider app.config remapping of assembly "Newtonsoft.Json, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed" from Version "4.5.0.0" [C:\Users\498084\Documents\GitHub\Twitter-Bot\TwitterBot\packages\TweetSharp.2.3.1\lib\4.0\Newtonsoft.Json.dll] to Version "6.0.0.0" [C:\Users\498084\Documents\GitHub\Twitter-Bot\TwitterBot\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll] to solve conflict and get rid of warning.
-1>C:\Windows\Microsoft.NET\Framework\v4.0.30319\Microsoft.Common.targets(1605,5): warning MSB3247: Found conflicts between different versions of the same dependent assembly.
-
-https://social.msdn.microsoft.com/Forums/vstudio/en-US/faa1b607-50bb-48e3-bd5d-76f4fc02ad4c/ms-build-gives-warning-msb3247-found-conflicts-between-different-versions-of-same-dependent?forum=msbuild
-
-Links:
+```
+    <add key="GoogleP12FileName" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="GoogleServiceAccountNameUserEmail" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="GoogleUserEmail" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="GoogleApplicationName" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="GoogleCalendarId" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailHost" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailPort" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailUserName" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailPassword" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailSenderAddress" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="MailReceiverAddress" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="TwitterConsumerKey" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="TwitterConsumerSecret" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="TwitterToken" value="YOU_SHOULD_COMPLETE_THIS" />
+    <add key="TwitterTokenSecret" value="YOU_SHOULD_COMPLETE_THIS" />
+```
+The final application is hosted on [AppHarbor] (https://appharbor.com/) and available [here] (http://lentbot.apphb.com/).
