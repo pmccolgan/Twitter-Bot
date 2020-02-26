@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -50,3 +51,4 @@ TwitterBot/TwitterBot/packages/
 packages/
 TwitterBot/TwitterBot/Backupapp.config
 *.p12
+TwitterBot/.vs/

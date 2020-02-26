@@ -55,6 +55,26 @@ namespace TwitterBot.Controllers
             // Christmas
             // now = new DateTime(2015, 12, 25);
 
+            // 2020 test dates
+            // AshWednesday
+            // now = new DateTime(2020, 02, 26);
+            // One month
+            // now = new DateTime(2020, 03, 12);
+            // One week
+            // now = new DateTime(2020, 04, 05);
+            // Weeks
+            // now = new DateTime(2020, 03, 22);
+            // Maundy Thursday
+            // now = new DateTime(2020, 04, 9);
+            // Good Friday
+            // now = new DateTime(2020, 04, 10);
+            // Holy Saturday
+            // now = new DateTime(2020, 04, 11);
+            // Easter Sunday
+            // now = new DateTime(2020, 04, 12);
+            // Otherwise however many days
+            // now = new DateTime(2020, 02, 27);
+
             ViewBag.Now = now.ToString("MMMM dd yyyy");
 
             var tweetMessage = string.Empty;
@@ -151,18 +171,18 @@ namespace TwitterBot.Controllers
                 // In lent
                 else if ((now >= ashWednesday) && (now <= easterSunday))
                 {
-                    var wait = easterSunday - now;
+                    var remaining = easterSunday - now;
 
-                    var days = wait.Days;
+                    var doneDays = lent.Days - remaining.Days;
 
-                    var dayCount = string.Format("today is day {0}/{1} of Lent", (lent.Days - days), lent.Days);
+                    var dayCount = string.Format("today is day {0}/{1} of Lent", (doneDays + 1), lent.Days);
 
                     // Special
                     // Ash Wednesday
                     if ((now.Month == ashWednesday.Month) &&
                         (now.Day == ashWednesday.Day))
                     {
-                        tweetMessage = string.Format("Its Ash Wednesday, {0} days of Lent ahead until Easter Sunday ({1}).", days, easterSunday.ToString("MMMM dd, yyyy"));
+                        tweetMessage = string.Format("Its Ash Wednesday, {0} days of Lent ahead until Easter Sunday ({1}).", lent.Days, easterSunday.ToString("MMMM dd, yyyy"));
                     }
                     // One month
                     else if ((now.Month == (easterSunday.Month - 1)) &&
@@ -170,39 +190,44 @@ namespace TwitterBot.Controllers
                     {
                         tweetMessage = string.Format("One month until Easter Sunday ({0}), {1}.", easterSunday.ToString("MMMM dd, yyyy"), dayCount);
                     }
-                    // One week
-                    else if (days == 7)
+                    // Palm Sunday
+                    else if (remaining.Days == 7)
                     {
-                        tweetMessage = string.Format("One week until Easter Sunday ({0}), {1}.", easterSunday.ToString("MMMM dd, yyyy"), dayCount);
+                        tweetMessage = string.Format("Its Palm Sunday, one week until Easter Sunday ({0}), {1}.", easterSunday.ToString("MMMM dd, yyyy"), dayCount);
                     }
                     // Weeks
-                    else if ((days > 0) &&
-                        ((days % 7) == 0))
+                    else if ((remaining.Days > 0) &&
+                        ((remaining.Days % 7) == 0))
                     {
-                        tweetMessage = string.Format("{0} weeks until Easter Sunday ({1}), {2}.", (days/7), easterSunday.ToString("MMMM dd, yyyy"), dayCount);
+                        tweetMessage = string.Format("{0} weeks until Easter Sunday ({1}), {2}.", (remaining.Days / 7), easterSunday.ToString("MMMM dd, yyyy"), dayCount);
+                    }
+                    // Maundy Thursday
+                    else if (remaining.Days == 3)
+                    {
+                        tweetMessage = string.Format("Its Maundy Thursday, {0}.", dayCount);
                     }
                     // Good Friday
-                    else if (days == 2)
+                    else if (remaining.Days == 2)
                     {
                         tweetMessage = string.Format("Its Good Friday, {0}.", dayCount);
                     }
                     // Holy Saturday
-                    else if (days == 1)
+                    else if (remaining.Days == 1)
                     {
                         tweetMessage = string.Format("Its Holy Saturday, {0}.", dayCount);
                     }
                     // Easter Sunday
-                    else if (days == 0)
+                    else if (remaining.Days == 0)
                     {
-                        tweetMessage = string.Format("Happy Easter, today is day {0}/{1} and Lent is over, well done!", (lent.Days - days), lent.Days);
+                        tweetMessage = string.Format("Happy Easter, its Easter Sunday and Lent is over, well done!");
                     }
                     // Otherwise however many days
                     else
                     {
-                        tweetMessage = string.Format("Its day {0}/{1} of Lent.", (lent.Days - days), lent.Days);
+                        tweetMessage = string.Format("Its day {0}/{1} of Lent.", (doneDays + 1), lent.Days);
                     }
 
-                    ViewBag.WaitMessage = string.Format("Its day {0}/{1} of Lent.", (lent.Days - days), lent.Days);
+                    ViewBag.WaitMessage = string.Format("Its day {0}/{1} of Lent.", (doneDays + 1), lent.Days);
                 }
                 // Next lent
                 else
@@ -301,6 +326,14 @@ namespace TwitterBot.Controllers
                     else
                     {
                         ViewBag.AlreadyTweetedTime = tweet.TimeOfLastTweet;
+
+                        if (tweet.TimeOfLastTweet == new DateTime())
+                        {
+                            var body = string.Format("Time of last tweet looks like junk: {0}", tweet.TimeOfLastTweet);
+
+                            mailHelper.Send(subject,
+                                            body);
+                        }
                     }
                 }
             }

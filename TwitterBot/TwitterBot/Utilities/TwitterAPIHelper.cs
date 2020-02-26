@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using TweetSharp;
 
 namespace TwitterBot.Utilities
@@ -15,6 +16,8 @@ namespace TwitterBot.Utilities
         {
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 this.m_service = new TwitterService(consumerKey, consumerSecret);
                 this.m_service.AuthenticateWith(token, tokenSecret);
             }
